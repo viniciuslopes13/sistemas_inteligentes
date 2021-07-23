@@ -5,8 +5,8 @@ class State:
 def initialState():
     return State(1)
 
-def queueIsEmpty():
-    return len(queue) == 0
+def stackIsEmpty():
+    return len(stack) == 0
 
 def showState(s):
     print(s.n)
@@ -15,28 +15,27 @@ def expand(s):
     if s.n >= 4:
         return []
     ret = []
-    ret.append(State(2*s.n))
+    
     ret.append(State(2*s.n + 1))
+    ret.append(State(2*s.n))
     return ret
 
-queue = []
+stack = []
 
-def enqueue(s):
-    queue.append(s)
+def push(s):
+    stack.append(s)
 
-def dequeue():
-    ret = queue[0]
-    del queue[0]
-    return ret
+def pop():
+    return stack.pop()
 
 
 s = initialState()
 
-enqueue(s)
+push(s)
 
-while not queueIsEmpty():
-    current = dequeue()
+while not stackIsEmpty():
+    current = pop()
     showState(current)
     children = expand(current)
     for child in children:
-        enqueue(child)
+        push(child)
