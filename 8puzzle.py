@@ -1,4 +1,12 @@
-state = [[1,2,3],[4,5,6],[7,8,0]]
+state = [[1,2,3],[4,0,5],[7,8,6]]
+
+class State:
+    def __init__(self,n,parent):
+        self.n = n
+        self.parent = parent
+
+def initialState():
+    return State(state,None)
 
 def showState(state):
     print("==========")
@@ -78,11 +86,39 @@ def expand(state):
 
     return children
     
+def filaVazia():
+    return len(fila)==0
+
+def enfileira(state):
+    fila.append(state)
+
+def desenfileira():
+    ret = fila[0]
+    del fila[0]
+    return ret 
+
+def mostrarCaminho(s):
+    if s is None:
+        return
+    mostrarCaminho(s[4])
+    showState(s)
+
+fila = []
+enfileira(state)
+while not filaVazia():
+    estadoAtual = desenfileira()
+    if isGoal(estadoAtual):
+        print("Estado objetivo encontrado!")
+        showState(estadoAtual)
+        break
+    showState(estadoAtual)
+    estadosFilhos = expand(estadoAtual)
+    for filho in estadosFilhos:
+        enfileira(filho)
 
 
-showState(state)
-if(isGoal(state)):
-    print("Estado objetivo")
+#if(isGoal(state)):
+#    print("Estado objetivo")
 
-if(not isGoal(state)):
-    print("Nao estado objetivo")
+#if(not isGoal(state)):
+#    print("Nao estado objetivo")
